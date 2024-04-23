@@ -1,25 +1,19 @@
-import { useState, useEffect } from "react";
+import {useEffect, useState, useRef} from "react";
 
 const App = () => {
-  //o primeiro valor, ou seja, resourceType é o State em sí e o segundo é a função que usamos para executar o State, no caso, é meio que uma convensão usar set+nomeDoState
-  const [resourceType, setResourceType] =useState("posts");
+  const [name, setName] = useState("");
 
-  useEffect(() => {
-    console.log("render");
-  }, [resourceType]);
+  const inputRef = useRef();
 
-  const changeResourceType = (resourceType) => {
-    setResourceType(resourceType);
-  };
+  const focusInput = () => {
+    inputRef.current.focus();
+  }
 
   return (
     <div>
-      <h1>{resourceType}</h1>
-      <div style={{ display: "flex", alignItems: "center"}}>
-        <button onClick={() => changeResourceType("posts")}>Posts</button>
-        <button onClick={() => changeResourceType("comments")}>Comments</button>
-        <button onClick={() => changeResourceType("todos")}>Todos</button>
-      </div>
+      <input ref={inputRef} value={name} onChange={(e) => setName(e.target.value)} />
+      <p>Hello my name is {name}</p>
+      <button onClick={focusInput}>Focus</button>
     </div>
   );
 };
