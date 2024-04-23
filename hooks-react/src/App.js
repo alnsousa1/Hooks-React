@@ -1,23 +1,27 @@
-//para utilizar o state, antes de tudo é necessário importá-lo do react
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
 const App = () => {
-  //declarando um STATE e iniciando ele como zero
-  const [count, setCount] = useState(0);
+  //o primeiro valor, ou seja, resourceType é o State em sí e o segundo é a função que usamos para executar o State, no caso, é meio que uma convensão usar set+nomeDoState
+  const [resourceType, setResourceType] =useState("posts");
 
-  //função que adiciona +1 no state
-  //o "prevState" pega o estado padrão do estado, no caso, o valor ZERO e está adicionando +1
-  const incrementCount = () => {
-    setCount((prevState) => prevState + 1);
+  useEffect(() => {
+    console.log("render");
+  }, [resourceType]);
+
+  const changeResourceType = (resourceType) => {
+    setResourceType(resourceType);
   };
 
-  return(
+  return (
     <div>
-      <h1>{count}</h1>
-      <button onClick={incrementCount}>Adicionar</button>
+      <h1>{resourceType}</h1>
+      <div style={{ display: "flex", alignItems: "center"}}>
+        <button onClick={() => changeResourceType("posts")}>Posts</button>
+        <button onClick={() => changeResourceType("comments")}>Comments</button>
+        <button onClick={() => changeResourceType("todos")}>Todos</button>
+      </div>
     </div>
-  )
-}
-
+  );
+};
 
 export default App;
